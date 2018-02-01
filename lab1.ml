@@ -232,7 +232,7 @@ let zip (x : int list) (y : int list) : (int * int) list =
   let rec helper a x y =
   match (x,y) with
   | [], [] -> a
-  | (hx::tx, hy::ty) -> helper ((hx,hy)::a) tx ty
+  | (hx::tx, hy::ty) -> helper (a @ [(hx,hy)]) tx ty
   | _, _ -> raise (Invalid_argument "different lengths") in
   helper [] x y
 
@@ -349,5 +349,9 @@ functional programming techniques, that returns a list of all of the
 even numbers in its argument list.
 ......................................................................*)
 
-let evens x =
-  fold_right (fun b -> b if b mod 2 = 0 else []) x []
+let evens l =
+  fold_left (fun a e -> if e mod 2 = 1 then a else a @ [e]) [] l
+
+
+  (*let reteven l = if (l mod 2 = 0) then l else []
+  fold_right (fun b -> b if b mod 2 = 0 else []) x []*)
